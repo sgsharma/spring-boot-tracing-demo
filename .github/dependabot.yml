@@ -16,3 +16,8 @@ updates:
       - "otel-kafka-opentelemetry"
     schedule:
       interval: "daily"
+    groups:
+      dev-deps:
+        dependency-type: "development"
+      prod-deps:
+        dependency-type: "production"
