@@ -56,6 +56,7 @@
                         </buildpacks>
                         <builder>dashaun/builder:tiny</builder> <!-- paketo images do not support ARM -->
                         <env>
+                            <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
                             <BP_OPENTELEMETRY_ENABLED>true</BP_OPENTELEMETRY_ENABLED>
                             <BPL_JAVA_NMT_ENABLED>false</BPL_JAVA_NMT_ENABLED>
                             <BP_SPRING_CLOUD_BINDINGS_DISABLED>true</BP_SPRING_CLOUD_BINDINGS_DISABLED>
