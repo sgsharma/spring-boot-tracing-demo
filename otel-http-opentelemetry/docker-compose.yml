@@ -2,7 +2,10 @@
 version: "3.8"
 services:
   httpservice1:
-    image: "httpservice1-otel:0.0.1-SNAPSHOT"
+    platform: linux/amd64
+    build:
+      context: ./httpservice1-otel
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
@@ -13,10 +16,13 @@ services:
       - OTEL_TRACES_EXPORTER=otlp
       - OTEL_METRICS_EXPORTER=none
       - OTEL_SERVICE_NAME=http-service1
-      - OTEL_EXPORTER_OTLP_HEADERS=x-honeycomb-team=<YOUR_HONEYCOMB_API_KEY>
+      - OTEL_EXPORTER_OTLP_HEADERS=x-honeycomb-team=hcaik_01jyfz8apre642s7ac8vh8cy8w930vwnhxxn15ya3d7vrd74c4qgg7sscf
 
   httpservice2:
-    image: "httpservice2-otel:0.0.1-SNAPSHOT"
+    platform: linux/amd64
+    build:
+      context: ./httpservice2-otel
+      dockerfile: Dockerfile
     ports:
       - "8081:8081"
     environment:
@@ -26,9 +32,18 @@ services:
       - OTEL_TRACES_EXPORTER=otlp
       - OTEL_METRICS_EXPORTER=none
       - OTEL_SERVICE_NAME=http-service2
-      - OTEL_EXPORTER_OTLP_HEADERS=x-honeycomb-team=<YOUR_HONEYCOMB_API_KEY>
+      - OTEL_EXPORTER_OTLP_HEADERS=x-honeycomb-team=hcaik_01jyfz8apre642s7ac8vh8cy8w930vwnhxxn15ya3d7vrd74c4qgg7sscf
+
+  load-generator:
+    build:
+      context: ./load-generator
+      dockerfile: Dockerfile
+    depends_on:
+      - httpservice1
+      - httpservice2
 
   # jaeger:
+  #   platform: linux/amd64
   #   image: jaegertracing/all-in-one:1.53
   #   ports:
   #     - "16686:16686"
